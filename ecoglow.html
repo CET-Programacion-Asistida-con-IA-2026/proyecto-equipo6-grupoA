@@ -1145,6 +1145,31 @@
         
         chatBox.scrollTop = chatBox.scrollHeight;
     }
+    async function registrarEmail(event) {
+    event.preventDefault(); // Evita que la página se recargue
+    const emailInput = document.getElementById("nl-email");
+    const email = emailInput.value.trim();
+
+    if (!email) return;
+
+    try {
+        // Aquí pondrás la URL que te dé Make, Zapier o tu propio servidor
+        const response = await fetch('TU_URL_DE_CONEXION', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email })
+        });
+
+        if (response.ok) {
+            alert("¡Te suscribiste con éxito a Ecoglow! 🌿");
+            emailInput.value = "";
+        } else {
+            alert("Hubo un error al registrarte. Inténtalo de nuevo.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
   </script>
 </body>
 </html>
