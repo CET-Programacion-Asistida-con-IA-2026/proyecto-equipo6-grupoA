@@ -1,4 +1,3 @@
- <script>
     const reveals = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
@@ -96,4 +95,4 @@
         
         chatBox.scrollTop = chatBox.scrollHeight;
     }
-  </script>
+ 
