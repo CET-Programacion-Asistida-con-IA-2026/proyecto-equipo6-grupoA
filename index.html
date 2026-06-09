@@ -6,6 +6,7 @@
   <title>Ecoglow — Belleza Consciente</title>
   <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css">
+  <script src="Javascript.js" defer></script>
 </head>
 <body>
 
@@ -273,5 +274,26 @@
     </div>
     
     <div id="chat-box">
-        <div class="message bot-message">¡Hola! ¿Cómo puedo ayudarte
-          <script> <script src="Javascript.js"></script></script>
+        <div class="message bot-message">¡Hola! ¿Cómo puedo ayudarte hoy? Podés consultarme sobre rutinas o subir una foto de los ingredientes del dorso de tu cosmético para que analicemos su pureza juntos. ✨</div>
+    </div>
+    
+    <div id="preview-container">
+        <img id="img-preview" src="" alt="Preview">
+        <span style="font-size: 11px; color: var(--mid); flex: 1;">Imagen cargada lista para analizar</span>
+        <span id="remove-preview" onclick="clearImagePreview()">×</span>
+    </div>
+    
+    <div id="input-container">
+        <label for="file-input" class="file-label">📎</label>
+        <input type="file" id="file-input" accept="image/*" onchange="previewImage(event)">
+        
+        <input type="text" id="user-input" placeholder="Pregúntame algo..." onkeypress="handleKeyPress(event)">
+        <button id="send-btn" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+
+  <audio id="sound-send" src="tu-sonido-enviar.mp3" preload="auto"></audio>
+  <audio id="sound-receive" src="tu-sonido-recibir.mp3" preload="auto"></audio>
+
+</body>
+</html>
