@@ -1,4 +1,4 @@
-   // Animación de aparición (Scroll Reveal)
+// Animación de aparición (Scroll Reveal)
 const reveals = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -96,4 +96,35 @@ async function sendMessage() {
     }
     
     chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// ── NUEVA LÓGICA: Registro al Boletín Informativo (Newsletter) ──
+async function registrarEmail(event) {
+    event.preventDefault(); // Evita que la página se recargue por completo
+    
+    const emailInput = document.getElementById("nl-email");
+    const email = emailInput.value.trim();
+
+    if (!email) return;
+
+    try {
+        // CAMBIA 'TU_URL_DE_RENDER_AQUÍ' por tu enlace real, dejando el /api/subscribe al final
+        const response = await fetch('https://ecoglow-gmail.onrender.com/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            alert("¡Te suscribiste con éxito a la Comunidad Ecoglow! 🌿");
+            emailInput.value = ""; // Limpia el casillero de correo si salió todo bien
+        } else {
+            alert("Hubo un problema: " + (data.error || "Inténtalo de nuevo."));
+        }
+    } catch (error) {
+        console.error("Error de conexión con el boletín:", error);
+        alert("Error técnico al conectar con el servidor de Ecoglow.");
+    }
 }
