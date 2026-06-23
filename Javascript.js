@@ -6,25 +6,25 @@ const io = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 reveals.forEach(r => io.observe(r));
-
+ 
 // Lógica del Chat interactivo
 const sendAudio = document.getElementById("sound-send");
 const receiveAudio = document.getElementById("sound-receive");
 let selectedImageBase64 = null;
-
+ 
 function toggleChat() {
     const chatContainer = document.getElementById("chat-container");
     chatContainer.style.display = (chatContainer.style.display === "none" || chatContainer.style.display === "") ? "flex" : "none";
 }
-
+ 
 function handleKeyPress(event) {
     if (event.key === "Enter") sendMessage();
 }
-
+ 
 function previewImage(event) {
     const file = event.target.files[0];
     if (!file) return;
-
+ 
     const reader = new FileReader();
     reader.onload = function(e) {
         selectedImageBase64 = e.target.result;
@@ -33,20 +33,20 @@ function previewImage(event) {
     }
     reader.readAsDataURL(file);
 }
-
+ 
 function clearImagePreview() {
     selectedImageBase64 = null;
     document.getElementById("file-input").value = "";
     document.getElementById("preview-container").style.display = "none";
 }
-
+ 
 async function sendMessage() {
     const inputField = document.getElementById("user-input");
     const chatBox = document.getElementById("chat-box");
     const message = inputField.value.trim();
     
     if (!message && !selectedImageBase64) return;
-
+ 
     let userMessageHTML = `<div class="message user-message">`;
     if (selectedImageBase64) {
         userMessageHTML += `<img src="${selectedImageBase64}" class="chat-img" />`;
@@ -62,9 +62,9 @@ async function sendMessage() {
     clearImagePreview();
     inputField.value = "";
     chatBox.scrollTop = chatBox.scrollHeight;
-
+ 
     try { sendAudio.play(); } catch(err) {}
-
+ 
     try {
         const response = await fetch('https://chat-de-productos-naturales-3.onrender.com/chat', {
             method: 'POST',
@@ -74,7 +74,7 @@ async function sendMessage() {
                 image: imageToSend 
             })
         });
-
+ 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
             const serverMsg = errorData.reply || errorData.error || `Código: ${response.status}`;
@@ -82,7 +82,7 @@ async function sendMessage() {
             chatBox.scrollTop = chatBox.scrollHeight;
             return;
         }
-
+ 
         const data = await response.json();
         
         if (data.reply) {
@@ -97,16 +97,39 @@ async function sendMessage() {
     
     chatBox.scrollTop = chatBox.scrollHeight;
 }
-
-// ── NUEVA LÓGICA: Registro al Boletín Informativo (Newsletter) ──
+ 
+// ── CARRUSEL FILOSOFÍA ──
+let currentSlide = 0;
+const totalSlides = 3;
+ 
+function moveCarousel(dir) {
+  currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
+  updateCarousel();
+}
+ 
+function goToSlide(index) {
+  currentSlide = index;
+  updateCarousel();
+}
+ 
+function updateCarousel() {
+  const track = document.getElementById('carouselTrack');
+  const dots = document.querySelectorAll('.carousel-dot');
+  if (track) track.style.transform = `translateX(-${currentSlide * 100}%)`;
+  dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+}
+ 
+// Auto-avance cada 4 segundos
+setInterval(() => moveCarousel(1), 4000);
+ 
 async function registrarEmail(event) {
     event.preventDefault(); // Evita que la página se recargue por completo
     
     const emailInput = document.getElementById("nl-email");
     const email = emailInput.value.trim();
-
+ 
     if (!email) return;
-
+ 
     try {
         // CAMBIA 'TU_URL_DE_RENDER_AQUÍ' por tu enlace real, dejando el /api/subscribe al final
         const response = await fetch('https://ecoglow-gmail.onrender.com/api/subscribe', {
@@ -114,9 +137,9 @@ async function registrarEmail(event) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: email })
         });
-
+ 
         const data = await response.json();
-
+ 
         if (response.ok && data.success) {
             alert("¡Te suscribiste con éxito a la Comunidad Ecoglow! 🌿");
             emailInput.value = ""; // Limpia el casillero de correo si salió todo bien
