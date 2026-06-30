@@ -343,3 +343,74 @@ footer { background: #211d19; color: #a89a90; padding: 80px 8% 40px 8%; border-t
   .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
   #chat-container { width: calc(100% - 40px); right: 20px; bottom: 90px; height: 450px; }
 }
+/* ===== SECCIÓN ECOGLOW ===== */
+
+.eco-info{
+    grid-column: span 3;
+    max-width: 900px;
+}
+
+.eco-info h4{
+    color: var(--cream);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+}
+
+.eco-texto{
+    color:#b7aba3;
+    margin-bottom:25px;
+    line-height:1.7;
+}
+
+.eco-info details{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:14px;
+    margin-bottom:14px;
+    padding:18px 22px;
+    transition:.3s;
+}
+
+.eco-info details:hover{
+    border-color:var(--sea-pink);
+}
+
+.eco-info summary{
+    cursor:pointer;
+    list-style:none;
+    color:var(--cream);
+    font-size:1rem;
+    font-weight:bold;
+    position:relative;
+    padding-right:30px;
+}
+
+.eco-info summary::-webkit-details-marker{
+    display:none;
+}
+
+.eco-info summary::after{
+    content:"+";
+    position:absolute;
+    right:0;
+    top:0;
+    font-size:1.4rem;
+    color:var(--sea-pink);
+    transition:.3s;
+}
+
+.eco-info details[open] summary::after{
+    transform:rotate(45deg);
+}
+
+.eco-info details p{
+    margin-top:15px;
+    color:#b7aba3;
+    line-height:1.7;
+}
+
+.eco-final{
+    margin-top:25px;
+    color:#d8cec7;
+    line-height:1.8;
+}
